@@ -1,0 +1,6 @@
+Flask==2.1.4
+opencv-python==4.5.4.58
+numpy==1.21.2
+Keras==2.6.0
+imutils==0.5.4
+matplotlib==3.4.3

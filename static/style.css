@@ -1,0 +1,202 @@
+/* Reset default styles */
+body {
+    background: white;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    margin: 0;
+}
+
+/* Styling for the drag and drop area */
+.dragDrop {
+    border: 2px dashed rgb(202, 202, 202);
+    border-radius: 1ch;
+    margin: 10px auto 20px;
+    padding: 10px;
+    max-width: 480px; /* Limit width for smaller screens */
+    text-align: center; /* Center content horizontally */
+    box-sizing: border-box; /* Include padding in width */
+}
+
+.dragDrop img {
+    height: 120px;
+    margin: 20px auto;
+    display: block;
+}
+
+.dragDrop h4 {
+    text-align: center;
+}
+
+/* Styling for file input and buttons */
+.files {
+    padding: 5px;
+    text-align: center;
+}
+
+.files input::file-selector-button {
+    border: thin solid grey;
+    background: transparent;
+    font-weight: bolder;
+    font-size: 11px;
+    color: grey;
+    padding: 7px 10px;
+    border-radius: 1ch;
+    cursor: pointer;
+}
+
+.files input::file-selector-button:hover {
+    background: rgb(15, 131, 199);
+    color: #fff;
+}
+
+/* Styling for left and right sections */
+.left, .right {
+    display: inline-block;
+    margin: 0 10px;
+    padding: 0 15px;
+    background: transparent;
+    border-radius: 1ch;
+    border: 2px solid rgb(202, 202, 202);
+    width: calc(50% - 30px); /* Responsive width */
+    height: 100px;
+    box-sizing: border-box; /* Include padding in width */
+}
+
+.right {
+    margin-left: 0;
+}
+
+.left:hover, .right:hover {
+    border-color: rgb(15, 131, 199);
+}
+
+.left h5, .right h5 {
+    font-weight: bolder;
+    margin: 15px 0 10px;
+    display: inline-block;
+}
+
+input[type=checkbox] {
+    display: inline-block;
+    float: right;
+    margin: 17px 17px 0 0;
+}
+
+/* Styling for the username input */
+#username {
+    width: 100%;
+    border: 1px solid rgb(202, 202, 202);
+    border-radius: 1ch;
+    padding: 8px 15px;
+    font-size: 15px;
+    margin: 5px auto;
+    display: block;
+    outline: none;
+    box-sizing: border-box; /* Include padding in width */
+}
+
+/* Styling for the loading section */
+.loading {
+    border: 1px solid rgb(202, 202, 202);
+    width: 100%;
+    max-width: 480px; /* Limit width for smaller screens */
+    height: 60px;
+    border-radius: 1ch;
+    padding: 5px;
+    margin: 20px auto;
+    text-align: center; /* Center content horizontally */
+}
+
+.loading h5 {
+    margin: 5px auto;
+}
+
+.loading p {
+    font-size: 10px;
+    border-bottom: none;
+}
+
+/* Styling for the progress bar */
+#Progress {
+    width: 100%;
+    max-width: 480px; /* Limit width for smaller screens */
+    height: 10px;
+    border-radius: 1ch;
+    margin: 0;
+    margin-left: auto;
+    margin-right: auto; /* Center horizontally */
+    background-color: rgb(202, 202, 202);
+    box-sizing: border-box; /* Include padding in width */
+}
+
+@keyframes progressBarAnimation {
+    0% {
+        width: 0%;
+    }
+    100% {
+        width: 100%;
+    }
+}
+
+#bar {
+    animation: progressBarAnimation 5s ease-in-out forwards;
+    border-radius: 1ch;
+    height: 10px;
+    background-color: rgb(15, 131, 199);
+    box-sizing: border-box; /* Include padding in width */
+}
+
+/* Styling for discard and upload buttons */
+.discard, .upload {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 12px;
+    text-align: center;
+    margin: 20px 10px;
+    border-radius: 1ch;
+    cursor: pointer;
+}
+
+.discard {
+    color: #111;
+    background: transparent;
+    border: 1px solid rgb(202, 202, 202);
+}
+
+.upload {
+    color: #fff;
+    background: rgb(15, 131, 199);
+}
+
+/* Add a black background color to the top navigation */
+.topnav {
+    background-color: #009CFF;;
+    overflow: hidden;
+  }
+  
+  /* Style the links inside the navigation bar */
+  .topnav a {
+    float: left;
+    display: block;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+  }
+  
+  /* Change the color of links on hover */
+  .topnav a:hover {
+    background-color: #0077B6;
+    color: #fff;
+  }
+  
+  /* Add an active class to highlight the current page */
+  .topnav a.active {
+    background-color: #005E93;
+    color: white;
+  }
+  
+  /* Hide the link that should open and close the topnav on small screens */
+  .topnav .icon {
+    display: none;
+  }
