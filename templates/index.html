@@ -108,7 +108,7 @@ body {
 
 input[type=checkbox] {
     display: inline-block;
-    float: right;
+    /* float: right; */
     margin: 17px 17px 0 0;
 }
 
@@ -345,13 +345,13 @@ input[type=checkbox] {
                     probabilityResult.innerHTML = `<h1>${data.probability.toFixed(2)}%</h1>`;
                 } else {
                     imagePreview.style.display = 'none';
-                    result.innerHTML = '<h3>Error occurred during prediction.</h3>';
+                    result.innerHTML = '<h3>Error occurred during prediction.</h3><br><h3>PLease Upload a Brain MRI scan</h3>';
                 }
             })
             .catch((error) => {
                 console.error(error);
                 imagePreview.style.display = 'none';
-                result.innerHTML = '<h3>Error occurred during prediction.</h3>';
+                result.innerHTML = '<h3>Error occurred during prediction.</h3><br><h3>PLease Upload a Brain MRI scan</h3>';
             });
         });
     </script>

@@ -40,15 +40,26 @@ IMG_WIDTH, IMG_HEIGHT = (240, 240)
 
 def preprocess_image(image):
     # Preprocess the image to match the model's input shape
-    image = crop_brain_contour(image, plot=False)
-    image = cv2.resize(image, dsize=(IMG_WIDTH, IMG_HEIGHT), interpolation=cv2.INTER_CUBIC)
-    image = image / 255.
-    image = np.expand_dims(image, axis=0)
-    return image
+    cropped_image = crop_brain_contour(image, plot=False)
+    
+    # If the image contains red, blue, or yellow colors, return None
+    if cropped_image is None:
+        return None
+    
+    cropped_image = cv2.resize(cropped_image, dsize=(IMG_WIDTH, IMG_HEIGHT), interpolation=cv2.INTER_CUBIC)
+    cropped_image = cropped_image / 255.
+    cropped_image = np.expand_dims(cropped_image, axis=0)
+    return cropped_image
+
 
 def predict_image(image):
     # Preprocess the image and make predictions using the model
     processed_image = preprocess_image(image)
+
+    # If the image contains red, blue, or yellow colors, return None
+    if processed_image is None:
+        return None, None
+
     prediction = best_model.predict(processed_image)
 
     # Assuming you have a binary classification model, get the probability of class 1
@@ -58,6 +69,8 @@ def predict_image(image):
     probability_percentage = probability * 100
 
     return prediction, probability_percentage
+
+
 
 # Login route
 @app.route('/login', methods=['GET', 'POST'])
@@ -119,10 +132,15 @@ def upload_image():
         file = request.files['image']
         image = cv2.imdecode(np.fromstring(file.read(), np.uint8), cv2.IMREAD_COLOR)
         prediction, probability_percentage = predict_image(image)
-        result = "Brain Tumor" if prediction > 0.5 else "No Brain Tumor"
-        return render_template('index.html', result=result)
+
+        if prediction is not None:
+            result = "Brain Tumor" if prediction > 0.5 else "No Brain Tumor"
+            return render_template('index.html', result=result, probability=probability_percentage)
+
+        flash('Image contains red, blue, or yellow colors. Please upload a different image.', 'error')
 
     return render_template('index.html')
+
 
 # API route for brain tumor detection
 @app.route('/predict', methods=['POST'])
@@ -166,4 +184,4 @@ def create_user(username, password):
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
-    app.run(debug=True)
+    app.run(use_reloader=False)
