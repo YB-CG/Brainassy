@@ -298,62 +298,73 @@ input[type=checkbox] {
     </div>
 
     <!-- JavaScript -->
-    <script>
-        const uploadForm = document.getElementById('upload-form');
-        const imagePreview = document.getElementById("output");
-        const result = document.getElementById('result');
-        const progressBar = document.getElementById('bar');
-        const gettingReadyText = document.getElementById('gettingReadyText');
-        const readyText = document.getElementById('readyText');
-        const predictionResult = document.getElementById('predictionResult');
-        const probabilityResult = document.getElementById('probabilityResult');
+<!-- JavaScript -->
+<script>
+    const uploadForm = document.getElementById('upload-form');
+    const imagePreview = document.getElementById("output");
+    const result = document.getElementById('result');
+    const progressBar = document.getElementById('bar');
+    const gettingReadyText = document.getElementById('gettingReadyText');
+    const readyText = document.getElementById('readyText');
+    const predictionResult = document.getElementById('predictionResult');
+    const probabilityResult = document.getElementById('probabilityResult');
 
-        // Function to handle file selection and preview
-        function handleFileSelect(event) {
-            const selectedFile = event.target.files[0];
-            if (selectedFile) {
-                imagePreview.src = URL.createObjectURL(selectedFile);
-            }
+    // Function to handle file selection and preview
+    function handleFileSelect(event) {
+        const selectedFile = event.target.files[0];
+        if (selectedFile) {
+            imagePreview.src = URL.createObjectURL(selectedFile);
         }
+    }
 
-        // Function to toggle checkboxes
-        function toggleCheckbox(clickedCheckbox) {
-            const checkboxes = document.getElementsByName(clickedCheckbox.name);
-            for (let i = 0; i < checkboxes.length; i++) {
-                checkboxes[i].checked = (checkboxes[i] === clickedCheckbox);
-            }
+    // Function to toggle checkboxes
+    function toggleCheckbox(clickedCheckbox) {
+        const checkboxes = document.getElementsByName(clickedCheckbox.name);
+        for (let i = 0; i < checkboxes.length; i++) {
+            checkboxes[i].checked = (checkboxes[i] === clickedCheckbox);
         }
+    }
 
-        uploadForm.addEventListener('submit', (event) => {
-            event.preventDefault();
-            const formData = new FormData();
-            formData.append('image', event.target.image.files[0]);
+    uploadForm.addEventListener('submit', (event) => {
+        event.preventDefault();
 
-            fetch('/predict', {
-                method: 'POST',
-                body: formData,
-            })
-            .then((response) => response.json())
-            .then((data) => {
-                if (data.success) {
-                    const imagePath = URL.createObjectURL(event.target.image.files[0]);
-                    gettingReadyText.style.display = 'none';
-                    readyText.style.display = 'block';
-                    imagePreview.innerHTML = `<img src="${imagePath}" alt="Uploaded Image" width="500">`;
-                    imagePreview.style.display = 'block';
-                    predictionResult.innerHTML = `<h1>${data.prediction}</h1>`;
-                    probabilityResult.innerHTML = `<h1>${data.probability.toFixed(2)}%</h1>`;
-                } else {
-                    imagePreview.style.display = 'none';
-                    result.innerHTML = '<h3>Error occurred during prediction.</h3><br><h3>PLease Upload a Brain MRI scan</h3>';
-                }
-            })
-            .catch((error) => {
-                console.error(error);
+        // Reset elements and values
+        imagePreview.style.display = 'none';
+        result.innerHTML = '';
+        predictionResult.innerHTML = '';
+        probabilityResult.innerHTML = '';
+        gettingReadyText.style.display = 'block';
+        readyText.style.display = 'none';
+
+        const formData = new FormData();
+        formData.append('image', event.target.image.files[0]);
+
+        fetch('/predict', {
+            method: 'POST',
+            body: formData,
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            if (data.success) {
+                const imagePath = URL.createObjectURL(event.target.image.files[0]);
+                gettingReadyText.style.display = 'none';
+                readyText.style.display = 'block';
+                imagePreview.innerHTML = `<img src="${imagePath}" alt="Uploaded Image" width="500">`;
+                imagePreview.style.display = 'block';
+                predictionResult.innerHTML = `<h1>${data.prediction}</h1>`;
+                probabilityResult.innerHTML = `<h1>${data.probability.toFixed(2)}%</h1>`;
+            } else {
                 imagePreview.style.display = 'none';
-                result.innerHTML = '<h3>Error occurred during prediction.</h3><br><h3>PLease Upload a Brain MRI scan</h3>';
-            });
+                result.innerHTML = '<h3>Error occurred during prediction.</h3><br><h3>Please Upload a Brain MRI scan</h3>';
+            }
+        })
+        .catch((error) => {
+            console.error(error);
+            imagePreview.style.display = 'none';
+            result.innerHTML = '<h3>Error occurred during prediction.</h3><br><h3>Please Upload a Brain MRI scan</h3>';
         });
-    </script>
+    });
+</script>
+
 </body>
 </html>
