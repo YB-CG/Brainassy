@@ -35,7 +35,7 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 
 # Define the preprocess and prediction functions for brain tumor detection
-best_model = load_model(filepath='cnn-parameters-improvement-23-0.91.model')
+best_model = load_model(filepath='newModel.model')
 IMG_WIDTH, IMG_HEIGHT = (240, 240)
 
 def preprocess_image(image):
